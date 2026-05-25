@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adversarial ML - Threat Assessment Dashboard</title>
+  
+  <!-- FontAwesome Icons & Premium Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- 1. PREMIUM GLASS SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-logo"><i class="fas fa-shield-halved"></i></div>
+        <div class="brand-name">RobustML</div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-item active">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard Overview</span>
+        </a>
+        <a href="playground.html" class="nav-item">
+          <i class="fas fa-sliders"></i>
+          <span>Attack Sandbox</span>
+        </a>
+        <a href="metrics.html" class="nav-item">
+          <i class="fas fa-chart-area"></i>
+          <span>Performance Analytics</span>
+        </a>
+        <a href="theory.html" class="nav-item">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Educational Lab</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <span style="font-size: 0.75rem; color: var(--text-dark); font-weight: 600;">THEME CONTROL</span>
+        <button id="theme-toggle-btn" class="theme-toggle-btn" title="Toggle Light/Dark Theme">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- 2. MAIN CONTENT BODY -->
+    <main class="main-content">
+      
+      <!-- Top header line -->
+      <header class="top-header">
+        <div class="page-title">
+          <h1>Threat Assessment Dashboard</h1>
+          <p>Adversarial Attacks and Defense Mechanisms in Deep Learning Models</p>
+        </div>
+        
+        <div class="system-status">
+          <span>Security Kernel:</span>
+          <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span>ACTIVE MONITORING</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- KPI Summary Row -->
+      <section class="dashboard-summary-grid">
+        
+        <div class="metric-card indigo">
+          <div class="metric-header">
+            <span>STANDARD ACCURACY (CLEAN)</span>
+            <i class="fas fa-circle-check"></i>
+          </div>
+          <div class="metric-value">91.0%</div>
+          <div class="metric-trend trend-up">
+            <i class="fas fa-caret-up"></i> Baseline Accuracy on clean inputs
+          </div>
+        </div>
+
+        <div class="metric-card rose">
+          <div class="metric-header">
+            <span>ADVERSARIAL VULNERABILITY</span>
+            <i class="fas fa-triangle-exclamation"></i>
+          </div>
+          <div class="metric-value">22.0%</div>
+          <div class="metric-trend trend-down">
+            <i class="fas fa-caret-down"></i> FGSM (ε = 0.15) Standard CNN
+          </div>
+        </div>
+
+        <div class="metric-card teal">
+          <div class="metric-header">
+            <span>DEFENDED ROBUST ACCURACY</span>
+            <i class="fas fa-shield-virus"></i>
+          </div>
+          <div class="metric-value">82.0%</div>
+          <div class="metric-trend trend-up">
+            <i class="fas fa-caret-up"></i> Robustness with online Adv Training
+          </div>
+        </div>
+
+        <div class="metric-card amber">
+          <div class="metric-header">
+            <span>PREPROCESS MITIGATION</span>
+            <i class="fas fa-wand-magic-sparkles"></i>
+          </div>
+          <div class="metric-value">60.0%</div>
+          <div class="metric-trend trend-up">
+            <i class="fas fa-caret-up"></i> JPEG Preprocessing Recovery
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Main Overview Cards Grid -->
+      <section class="dashboard-main-grid">
+        
+        <!-- Left: Project Narrative Card -->
+        <div class="grid-card">
+          <div class="card-header">
+            <div class="card-title">
+              <h3>Problem Definition & Objectives</h3>
+              <p>Understanding security vulnerability in Applied Machine Learning</p>
+            </div>
+            <span class="badge-info">AML Project Core</span>
+          </div>
+          
+          <div style="font-size: 0.95rem; display: flex; flex-direction: column; gap: 1rem;">
+            <p>
+              Deep learning models have achieved remarkable, human-level accuracy in tasks such as image classification, but they remain highly vulnerable to <strong>adversarial attacks</strong>—carefully crafted pixel perturbations added to input data that can mislead models into making confident, incorrect predictions. These perturbations are often completely imperceptible to humans, yet they catastrophically degrade model performance.
+            </p>
+            <p>
+              This vulnerability raises serious security and safety concerns in real-world applications such as <strong>autonomous driving, healthcare diagnostic networks, and biometric validation systems</strong>, where incorrect classification predictions can lead to critical real-world consequences.
+            </p>
+            <div style="background: rgba(255,255,255,0.02); border-left: 3px solid var(--primary); padding: 0.75rem 1rem; border-radius: 4px; font-weight: 500;">
+              <strong>Primary Objective:</strong> To analyze how adversarial perturbations affect deep learning classifiers and to implement robust defense mechanisms (like Adversarial Training and Input Preprocessing) to restore model stability and reliability.
+            </div>
+            
+            <h4 style="margin-top: 0.5rem; font-size: 1.05rem;">Project Key Objectives Checklist:</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.9rem; color: var(--text-muted);">
+              <div><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 0.5rem;"></i> Implement FGSM &amp; PGD Attacks</div>
+              <div><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 0.5rem;"></i> Evaluate Epsilon Decay Slopes</div>
+              <div><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 0.5rem;"></i> Design Input Preprocessors</div>
+              <div><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 0.5rem;"></i> Construct Robust Adv Training</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Active Training Console Card -->
+        <div class="grid-card">
+          <div class="card-header">
+            <div class="card-title">
+              <h3>Model Training Console</h3>
+              <p>Live terminal training execution feeds</p>
+            </div>
+            <span class="badge-warn">Execution Logs</span>
+          </div>
+          
+          <div class="console-code-block" style="flex-grow: 1; min-height: 280px; display: flex; flex-direction: column;">
+            <div class="console-title-bar">
+              <div class="console-dots">
+                <div class="console-dot red"></div>
+                <div class="console-dot yellow"></div>
+                <div class="console-dot green"></div>
+              </div>
+              <span class="console-lang">python core/run_suite.py</span>
+            </div>
+            <div id="console-logs-container" style="flex-grow: 1; overflow-y: auto; font-size: 0.8rem; font-family: var(--font-mono); max-height: 250px;">
+              <!-- Javascript populates logs typing animation -->
+              [INFO] Initiating logs listener...
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+    
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/mock_data.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

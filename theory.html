@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adversarial ML - Educational Lab</title>
+  
+  <!-- FontAwesome Icons & Premium Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- PREMIUM GLASS SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-logo"><i class="fas fa-shield-halved"></i></div>
+        <div class="brand-name">RobustML</div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard Overview</span>
+        </a>
+        <a href="playground.html" class="nav-item">
+          <i class="fas fa-sliders"></i>
+          <span>Attack Sandbox</span>
+        </a>
+        <a href="metrics.html" class="nav-item">
+          <i class="fas fa-chart-area"></i>
+          <span>Performance Analytics</span>
+        </a>
+        <a href="theory.html" class="nav-item active">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Educational Lab</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <span style="font-size: 0.75rem; color: var(--text-dark); font-weight: 600;">THEME CONTROL</span>
+        <button id="theme-toggle-btn" class="theme-toggle-btn" title="Toggle Light/Dark Theme">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT BODY -->
+    <main class="main-content">
+      
+      <!-- Top header line -->
+      <header class="top-header">
+        <div class="page-title">
+          <h1>Educational &amp; Theoretical Lab</h1>
+          <p>Demystifying the mathematical foundations of adversarial perturbations</p>
+        </div>
+      </header>
+
+      <!-- Theory and Mathematics Explanation Panel -->
+      <section class="grid-card" style="margin-bottom: 2rem;">
+        <div class="card-header">
+          <div class="card-title">
+            <h3>Fast Gradient Sign Method (FGSM) Formulation</h3>
+            <p>Maximizing classifier loss using L-infinity sign-noise directions</p>
+          </div>
+          <span class="badge-info">Core Mathematics</span>
+        </div>
+        
+        <div style="font-size: 0.95rem; display: flex; flex-direction: column; gap: 1.25rem;">
+          <p>
+            Introduced by Goodfellow et al. (2014), the <strong>Fast Gradient Sign Method (FGSM)</strong> is a simple, highly efficient one-step adversarial attack. Instead of minimizing classification loss (as we do during training to improve accuracy), FGSM performs <strong>gradient ascent</strong> to maximize model classification loss with respect to the input pixels.
+          </p>
+          <p>
+            By taking a step in the direction of the sign of the loss gradients, the attack ensures that every pixel value is shifted by a maximum step of $\epsilon$, maximizing L-infinity perturbation boundaries:
+          </p>
+          
+          <div class="math-eq-display">
+            x_{adv} = x + \varepsilon \cdot \text{sign}(\nabla_x \mathcal{L}(\theta, x, y))
+          </div>
+          
+          <div style="font-size: 0.85rem; color: var(--text-muted); display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; border-top: 1px solid var(--border-light); padding-top: 1rem; margin-top: 0.5rem;">
+            <div><strong>x_adv :</strong> Perturbed Adversarial Image</div>
+            <div><strong>x :</strong> Original Clean Input Image</div>
+            <div><strong>ε (Epsilon) :</strong> Perturbation size bound</div>
+            <div><strong>∇_x L(θ, x, y) :</strong> Loss gradient w.r.t input pixels</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step-by-step pipeline section -->
+      <section class="dashboard-main-grid" style="margin-bottom: 2rem;">
+        
+        <!-- Left: Step list -->
+        <div class="grid-card">
+          <div class="card-header">
+            <div class="card-title">
+              <h3>Adversarial Optimization Pipeline</h3>
+              <p>Step-by-step workflow of gradient-based pixel perturbation</p>
+            </div>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            
+            <div class="math-step-card">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <span class="step-title">Forward Propagation &amp; Loss Calculation</span>
+                <span class="step-desc">Input $x$ is passed through the network weights $\theta$ to calculate classification cross-entropy loss $L(\theta, x, y)$ with respect to true label $y$.</span>
+              </div>
+            </div>
+
+            <div class="math-step-card">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <span class="step-title">Backward Pass to Input Pixels</span>
+                <span class="step-desc">Backpropagation is performed. Instead of calculating gradients w.r.t model weights, we compute the gradient of the loss specifically w.r.t each input pixel: $\nabla_x L$.</span>
+              </div>
+            </div>
+
+            <div class="math-step-card">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <span class="step-title">Sign Extraction &amp; Scaling</span>
+                <span class="step-desc">We extract the sign of the calculated gradients ($\pm 1$). Multiplying by $\epsilon$ creates the optimal perturbation mask bounded by the L-infinity norm.</span>
+              </div>
+            </div>
+
+            <div class="math-step-card">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <span class="step-title">Perturbation Injection &amp; Pixel Clamping</span>
+                <span class="step-desc">The scaled mask is added to the original image. Pixels are clamped to $[0, 1]$ to remain valid, resulting in the completed adversarial image $x_{adv}$.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: PGD Explanation and Code Viewer -->
+        <div class="grid-card">
+          <div class="card-header">
+            <div class="card-title">
+              <h3>Projected Gradient Descent (PGD)</h3>
+              <p>Multi-step iterative sign attack</p>
+            </div>
+            <span class="badge-warn">Iterative Attack</span>
+          </div>
+          
+          <div style="font-size: 0.9rem; display: flex; flex-direction: column; gap: 1rem;">
+            <p style="color: var(--text-muted); line-height: 1.5;">
+              PGD is an iterative extension of FGSM. It takes multiple smaller gradient sign steps (step size $\alpha$) and projects the resulting image back onto the $\epsilon$-ball (the search domain $\mathcal{S}$) surrounding the original image at each step. This acts as a highly potent optimization attack:
+            </p>
+            <div class="math-eq-display" style="font-size: 0.95rem;">
+              x^{t+1} = \Pi_{x + \mathcal{S}} \left( x^t + \alpha \cdot \text{sign}(\nabla_x \mathcal{L}(\theta, x^t, y)) \right)
+            </div>
+            <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.85rem; background: rgba(244, 63, 94, 0.05); padding: 0.75rem; border-left: 3px solid var(--accent-warn); border-radius: 4px;">
+              <strong>Note:</strong> PGD is considered the ultimate L-infinity first-order attack. A model robust to PGD attacks is generally robust to all other L-infinity bounded first-order attacks.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Highlight Code Card -->
+      <section class="grid-card" style="margin-bottom: 2.5rem;">
+        <div class="card-header">
+          <div class="card-title">
+            <h3>PyTorch Core Implementation Showcase</h3>
+            <p>Direct view of python algorithms in core/attack.py</p>
+          </div>
+          <span class="badge-info">Runnable Source Code</span>
+        </div>
+        
+        <div class="console-code-block" style="margin-bottom: 0;">
+          <div class="console-title-bar">
+            <div class="console-dots">
+              <div class="console-dot red"></div>
+              <div class="console-dot yellow"></div>
+              <div class="console-dot green"></div>
+            </div>
+            <span class="console-lang">Python (PyTorch)</span>
+          </div>
+          <pre style="margin: 0; line-height: 1.4; overflow-x: auto; color: #fff; font-size: 0.8rem; font-family: var(--font-mono);">
+<span style="color: #f43f5e; font-weight: 600;">def</span> <span style="color: #6366f1; font-weight: 600;">fgsm_attack</span>(image, epsilon, data_grad):
+    <span style="color: #94a3b8;"># 1. Collect the sign of the input gradients</span>
+    sign_data_grad = data_grad.sign()
+    
+    <span style="color: #94a3b8;"># 2. Add the perturbation to the original image pixels</span>
+    perturbed_image = image + epsilon * sign_data_grad
+    
+    <span style="color: #94a3b8;"># 3. Clip the perturbed image pixels to maintain valid normalized range [0, 1]</span>
+    perturbed_image = torch.clamp(perturbed_image, <span style="color: #14b8a6;">0</span>, <span style="color: #14b8a6;">1</span>)
+    
+    <span style="color: #f43f5e; font-weight: 600;">return</span> perturbed_image
+
+<span style="color: #f43f5e; font-weight: 600;">def</span> <span style="color: #6366f1; font-weight: 600;">pgd_attack</span>(model, image, target, epsilon, alpha=<span style="color: #14b8a6;">0.01</span>, num_iter=<span style="color: #14b8a6;">10</span>):
+    original_image = image.clone().detach()
+    perturbed_image = image.clone().detach()
+    perturbed_image.requires_grad = <span style="color: #f43f5e; font-weight: 600;">True</span>
+    loss_fn = nn.CrossEntropyLoss()
+    
+    <span style="color: #f43f5e; font-weight: 600;">for</span> _ <span style="color: #f43f5e; font-weight: 600;">in</span> <span style="color: #6366f1;">range</span>(num_iter):
+        output = model(perturbed_image)
+        loss = loss_fn(output, target)
+        model.zero_grad()
+        loss.backward()
+        
+        data_grad = perturbed_image.grad.data
+        
+        <span style="color: #f43f5e; font-weight: 600;">with</span> torch.no_grad():
+            perturbed_image = perturbed_image + alpha * data_grad.sign()
+            <span style="color: #94a3b8;"># Projection step: constrain perturbation to L-infinity norm ball</span>
+            eta = torch.clamp(perturbed_image - original_image, min=-epsilon, max=epsilon)
+            perturbed_image = torch.clamp(original_image + eta, min=<span style="color: #14b8a6;">0</span>, max=<span style="color: #14b8a6;">1</span>).detach()
+            
+        perturbed_image.requires_grad = <span style="color: #f43f5e; font-weight: 600;">True</span>
+        
+    <span style="color: #f43f5e; font-weight: 600;">return</span> perturbed_image.detach()
+          </pre>
+        </div>
+      </section>
+
+    </main>
+    
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/mock_data.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

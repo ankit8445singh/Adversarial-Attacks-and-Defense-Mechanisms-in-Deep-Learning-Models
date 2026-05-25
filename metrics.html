@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adversarial ML - Performance Analytics</title>
+  
+  <!-- FontAwesome Icons & Premium Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- PREMIUM GLASS SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-logo"><i class="fas fa-shield-halved"></i></div>
+        <div class="brand-name">RobustML</div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard Overview</span>
+        </a>
+        <a href="playground.html" class="nav-item">
+          <i class="fas fa-sliders"></i>
+          <span>Attack Sandbox</span>
+        </a>
+        <a href="metrics.html" class="nav-item active">
+          <i class="fas fa-chart-area"></i>
+          <span>Performance Analytics</span>
+        </a>
+        <a href="theory.html" class="nav-item">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Educational Lab</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <span style="font-size: 0.75rem; color: var(--text-dark); font-weight: 600;">THEME CONTROL</span>
+        <button id="theme-toggle-btn" class="theme-toggle-btn" title="Toggle Light/Dark Theme">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT BODY -->
+    <main class="main-content">
+      
+      <!-- Top header line -->
+      <header class="top-header">
+        <div class="page-title">
+          <h1>Performance &amp; Robustness Analytics</h1>
+          <p>Analyzing precision accuracy slopes and defensive mitigation trade-offs</p>
+        </div>
+      </header>
+
+      <!-- Charts Dual Column Layout -->
+      <div class="playground-workspace">
+        
+        <!-- Left: Model Robustness Chart Card -->
+        <div class="playground-card" style="display: flex; flex-direction: column;">
+          <div class="card-header" style="margin-bottom: 0.5rem;">
+            <div class="card-title">
+              <h3>Model Accuracy vs. Epsilon (ε)</h3>
+              <p>Comparing Standard CNN vs. Robust Adversarially-Trained CNN</p>
+            </div>
+          </div>
+          
+          <!-- Custom SVG Container -->
+          <div id="robustness-chart-wrapper" class="svg-chart-container">
+            <!-- Custom responsive vector chart injected by metrics.js -->
+          </div>
+          
+          <!-- Legend -->
+          <div style="display: flex; justify-content: center; gap: 1.5rem; font-size: 0.85rem; margin-top: 1rem; font-weight: 600;">
+            <span style="color: var(--accent-warn);"><i class="fas fa-circle" style="margin-right: 0.35rem;"></i> Standard CNN (FGSM Attack)</span>
+            <span style="color: var(--secondary);"><i class="fas fa-circle" style="margin-right: 0.35rem;"></i> Robust CNN (Adv Trained, ε=0.15)</span>
+          </div>
+        </div>
+
+        <!-- Right: Preprocessors Comparison Chart Card -->
+        <div class="playground-card" style="display: flex; flex-direction: column;">
+          <div class="card-header" style="margin-bottom: 0.5rem;">
+            <div class="card-title">
+              <h3>Mitigation Preprocessors Comparison</h3>
+              <p>Evaluating recovery rates of different input filters on Standard CNN</p>
+            </div>
+          </div>
+          
+          <div id="preprocessing-chart-wrapper" class="svg-chart-container">
+            <!-- Custom preprocessor curve injected by metrics.js -->
+          </div>
+          
+          <!-- Legend -->
+          <div style="display: flex; justify-content: center; gap: 1rem; font-size: 0.75rem; margin-top: 1rem; font-weight: 600; flex-wrap: wrap;">
+            <span style="color: var(--accent-warn);"><i class="fas fa-circle" style="margin-right: 0.25rem;"></i> Direct Attack (None)</span>
+            <span style="color: var(--primary);"><i class="fas fa-circle" style="margin-right: 0.25rem;"></i> Avg Spatial Smoothing</span>
+            <span style="color: var(--secondary);"><i class="fas fa-circle" style="margin-right: 0.25rem;"></i> JPEG Compression Filter</span>
+            <span style="color: var(--accent-gold);"><i class="fas fa-circle" style="margin-right: 0.25rem;"></i> Bit-Depth Quantization</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Analysis Narrative Panel -->
+      <section class="grid-card" style="margin-bottom: 2.5rem;">
+        <div class="card-header">
+          <div class="card-title">
+            <h3>Robustness Trade-Offs &amp; Research Discussion</h3>
+            <p>Evaluating model regularizations, information losses, and threat landscapes</p>
+          </div>
+          <span class="badge-info">Applied ML Findings</span>
+        </div>
+        
+        <div style="font-size: 0.95rem; display: flex; flex-direction: column; gap: 1.5rem;">
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div>
+              <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--primary);"><i class="fas fa-scale-unbalanced" style="margin-right: 0.5rem;"></i> The Accuracy vs. Robustness Trade-off</h4>
+              <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">
+                As shown in Chart 1, the clean accuracy (at ε = 0) of the adversarially trained CNN is slightly lower (82.0%) compared to the standard model (91.0%). This gap of ~9% represents the <strong>robust regularization cost</strong>. In training a model to minimize worst-case adversarial loss, the decision boundary is smoothed, which can cause slight errors on standard inputs. However, under attack, the standard model accuracy drops catastrophically to <strong>22%</strong> at ε = 0.15, whereas the robust model retains a highly stable <strong>67%</strong> accuracy.
+              </p>
+            </div>
+            <div>
+              <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--secondary);"><i class="fas fa-compress" style="margin-right: 0.5rem;"></i> Defensive Preprocessing Limitations</h4>
+              <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">
+                Input preprocessing defenses (Chart 2) like JPEG compression and bit-depth quantization are <strong>computationally cheap</strong> because they require no expensive retraining. They act as high-frequency noise eliminators, recovering model accuracy up to ~60% under moderate attacks. However, their defense curves decay much faster than Adversarial Training under larger perturbations. Furthermore, they are vulnerable to <strong>Adaptive Attacks</strong>, where the attacker incorporates the preprocessor's gradients directly into the optimization.
+              </p>
+            </div>
+          </div>
+
+          <hr style="border: 0; border-top: 1px solid var(--border-light);">
+
+          <div>
+            <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;"><i class="fas fa-clipboard-list" style="margin-right: 0.5rem;"></i> Research Conclusions Summary:</h4>
+            <ol style="margin-left: 1.5rem; font-size: 0.9rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.5rem;">
+              <li><strong>No Free Lunch:</strong> Improving worst-case adversarial robustness inevitably shifts classification boundaries, causing a minor tax on standard prediction scores.</li>
+              <li><strong>Information Destructive Defenses:</strong> Spatial average smoothing and bit quantization remove noise but also destroy critical object edge shapes, explaining why their standard clean accuracy is lower.</li>
+              <li><strong>Multi-tier Defense:</strong> A comprehensive security architecture should combine **Adversarial Training** as the core model backbone with **Input Compression filters** to mitigate unknown zero-day high-frequency noise profiles.</li>
+            </ol>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+    
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/mock_data.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/metrics.js"></script>
+</body>
+</html>

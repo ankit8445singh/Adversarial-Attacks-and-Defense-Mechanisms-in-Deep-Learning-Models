@@ -1,0 +1,69 @@
+{
+    "metadata": {
+        "dataset": "mnist",
+        "architecture": "SimpleCNN (3 Conv, 2 FC layers)",
+        "standard_epochs": 5,
+        "robust_epochs": 5,
+        "adversarial_train_epsilon": 0.15
+    },
+    "epsilons": [
+        0.0,
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3
+    ],
+    "standard_model": {
+        "clean_accuracy": 0.974,
+        "adversarial_accuracies": [
+            0.974,
+            0.881,
+            0.686,
+            0.422,
+            0.224,
+            0.141,
+            0.093
+        ],
+        "smoothing_accuracies": [
+            0.938,
+            0.884,
+            0.755,
+            0.586,
+            0.445,
+            0.298,
+            0.211
+        ],
+        "jpeg_accuracies": [
+            0.972,
+            0.916,
+            0.769,
+            0.459,
+            0.243,
+            0.143,
+            0.094
+        ],
+        "bit_depth_accuracies": [
+            0.975,
+            0.947,
+            0.515,
+            0.457,
+            0.399,
+            0.107,
+            0.101
+        ]
+    },
+    "robust_model": {
+        "clean_accuracy": 0.981,
+        "adversarial_accuracies": [
+            0.981,
+            0.952,
+            0.916,
+            0.862,
+            0.775,
+            0.596,
+            0.341
+        ]
+    }
+}

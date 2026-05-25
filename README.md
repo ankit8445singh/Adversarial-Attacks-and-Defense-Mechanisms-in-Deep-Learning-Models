@@ -6,7 +6,7 @@ This repository contains a **production-grade PyTorch deep learning modeling sui
 
 ---
 
-##  Key Features
+## 🌟 Key Features
 
 *   **Dual-Attack Implementation:** Mathematical implementations of the **Fast Gradient Sign Method (FGSM)** and iterative **Projected Gradient Descent (PGD)** attacks w.r.t input pixels in PyTorch.
 *   **Multi-Tier Defense Sandbox:**
@@ -21,7 +21,7 @@ This repository contains a **production-grade PyTorch deep learning modeling sui
 
 ---
 
-##  Project Structure
+## 📂 Project Structure
 
 ```
 ├── index.html                   # Dashboard Home (narrative, summary KPIs, active terminal logs)
@@ -49,7 +49,7 @@ This repository contains a **production-grade PyTorch deep learning modeling sui
 
 ---
 
-##  Getting Started
+## 🚀 Getting Started
 
 To launch and run this project locally, you can preview the visual dashboard and execute the PyTorch deep learning mathematical models.
 
@@ -93,7 +93,7 @@ To retrain the models, execute the gradient attacks, and refresh the visual asse
 
 ---
 
-##  Evaluation & Mathematical Benchmarks
+## 📊 Evaluation & Mathematical Benchmarks
 
 Evaluating standard convolutional neural networks against robust adversarially-trained networks on MNIST yields the following precision accuracy scores:
 

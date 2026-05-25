@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adversarial ML - Attack &amp; Defense Sandbox</title>
+  
+  <!-- FontAwesome Icons & Premium Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="app-container" id="playground-container">
+    
+    <!-- PREMIUM GLASS SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-logo"><i class="fas fa-shield-halved"></i></div>
+        <div class="brand-name">RobustML</div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard Overview</span>
+        </a>
+        <a href="playground.html" class="nav-item active">
+          <i class="fas fa-sliders"></i>
+          <span>Attack Sandbox</span>
+        </a>
+        <a href="metrics.html" class="nav-item">
+          <i class="fas fa-chart-area"></i>
+          <span>Performance Analytics</span>
+        </a>
+        <a href="theory.html" class="nav-item">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Educational Lab</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <span style="font-size: 0.75rem; color: var(--text-dark); font-weight: 600;">THEME CONTROL</span>
+        <button id="theme-toggle-btn" class="theme-toggle-btn" title="Toggle Light/Dark Theme">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT BODY -->
+    <main class="main-content">
+      
+      <!-- Top header line -->
+      <header class="top-header">
+        <div class="page-title">
+          <h1>Attack &amp; Defense Sandbox</h1>
+          <p>Real-time visual simulation playground for gradient perturbations</p>
+        </div>
+      </header>
+
+      <!-- Main Dual Workspace Layout -->
+      <div class="playground-workspace">
+        
+        <!-- Left: Configuration Parameters Card -->
+        <div class="playground-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem;">1. Attack Parameters</h3>
+          
+          <!-- Dataset Picker row -->
+          <div class="selection-group">
+            <label>CHOOSE ACTIVE RESEARCH DATASET</label>
+            <div class="dataset-picker-container">
+              <button id="btn-cifar" class="picker-btn active">CIFAR-10 Objects</button>
+              <button id="btn-mnist" class="picker-btn">MNIST Handwritten Digits</button>
+            </div>
+          </div>
+          
+          <!-- Epsilon boundary slider widget -->
+          <div class="slider-container">
+            <div class="slider-labels">
+              <span style="font-weight: 600; color: var(--text-muted);">PERTURBATION INTENSITY BOUNDARY (ε)</span>
+              <span id="epsilon-val-badge" class="slider-val-badge">0.05</span>
+            </div>
+            <input type="range" id="epsilon-slider" class="interactive-slider" min="0.00" max="0.30" step="0.01" value="0.05">
+            <div class="slider-labels" style="font-size: 0.75rem; color: var(--text-dark); margin-top: 2px;">
+              <span>ε = 0.00 (Clean)</span>
+              <span>ε = 0.30 (Strong Perturbation)</span>
+            </div>
+          </div>
+          
+          <!-- Select Attack cards row -->
+          <div class="attack-defense-selectors">
+            <div class="selection-group">
+              <label>SELECT GRADIENT ATTACK ALGORITHM</label>
+              <div class="option-cards">
+                <div class="option-card attack-card active" data-attack="fgsm">
+                  <div class="option-indicator"></div>
+                  <div class="option-meta">
+                    <span class="option-title">FGSM (Fast Gradient Sign Method)</span>
+                    <span class="option-desc">Single-step gradient update to maximize loss: x + ε * sign(grad)</span>
+                  </div>
+                </div>
+                <div class="option-card attack-card" data-attack="pgd">
+                  <div class="option-indicator"></div>
+                  <div class="option-meta">
+                    <span class="option-title">PGD (Projected Gradient Descent)</span>
+                    <span class="option-desc">Iterative optimization step projected back inside epsilon-ball</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Defensive Preprocessing Card -->
+        <div class="playground-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem;">2. Defense Strategy</h3>
+          
+          <div class="selection-group">
+            <label>SELECT DEFENSE MECHANISM TO EVALUATE</label>
+            <div class="option-cards" style="gap: 0.6rem;">
+              
+              <!-- None option -->
+              <div class="option-card defense-card active" data-defense="none">
+                <div class="option-indicator"></div>
+                <div class="option-meta">
+                  <span class="option-title">No Defense (Standard Model Vulnerability)</span>
+                  <span class="option-desc">Exposes model directly to raw perturbed pixel streams.</span>
+                </div>
+              </div>
+              
+              <!-- Preprocess A: smoothing -->
+              <div class="option-card defense-card" data-defense="smoothing">
+                <div class="option-indicator"></div>
+                <div class="option-meta">
+                  <span class="option-title">Input Preprocessing: Spatial Avg Smoothing</span>
+                  <span class="option-desc">Applies low-pass 3x3 pooling to blur out adversarial high frequencies.</span>
+                </div>
+              </div>
+              
+              <!-- Preprocess B: jpeg -->
+              <div class="option-card defense-card" data-defense="jpeg">
+                <div class="option-indicator"></div>
+                <div class="option-meta">
+                  <span class="option-title">Input Preprocessing: JPEG Compression</span>
+                  <span class="option-desc">Simulates 8x8 macroblock quantization to drop fine gradient maps.</span>
+                </div>
+              </div>
+              
+              <!-- Preprocess C: bit depth -->
+              <div class="option-card defense-card" data-defense="bit_depth">
+                <div class="option-indicator"></div>
+                <div class="option-meta">
+                  <span class="option-title">Input Preprocessing: Bit-Depth Quantization</span>
+                  <span class="option-desc">Reduces precision to 3 bits, compressing imperceptible noises.</span>
+                </div>
+              </div>
+              
+              <!-- Robust Model (Adversarial Training) -->
+              <div class="option-card defense-card" data-defense="adv_training">
+                <div class="option-indicator"></div>
+                <div class="option-meta">
+                  <span class="option-title">Robust Model: Online Adversarial Training</span>
+                  <span class="option-desc">Switches weights to model trained with online FGSM inputs.</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Panel: Real-time Graphics & Confidences -->
+      <section class="grid-card" style="margin-bottom: 2.5rem;">
+        <div class="card-header">
+          <div class="card-title">
+            <h3>Visual Perturbation Pipeline &amp; Classifier Predictions</h3>
+            <p>Mathematical pixel translations (Original -> Sign Mask -> Adversarial -> Defended)</p>
+          </div>
+          <span class="badge-info">Live Execution Engine</span>
+        </div>
+        
+        <!-- Canvas side-by-side grids -->
+        <div class="visual-comparison-container">
+          
+          <div class="visual-node">
+            <div class="visual-node-label">Clean input (x)</div>
+            <div class="img-canvas-wrapper">
+              <canvas id="canvas-clean" width="128" height="128"></canvas>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--secondary); font-weight: 600; margin-top: 8px;">TRUE ACCORDANCE</div>
+          </div>
+
+          <div class="operator-sign">
+            <div style="display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; gap: 4px;">
+              <i class="fas fa-plus"></i>
+              <span style="font-size: 0.65rem; color: var(--text-dark);">ε × sign(grad)</span>
+            </div>
+          </div>
+
+          <div class="visual-node">
+            <div class="visual-node-label">Loss Gradient Sign</div>
+            <div class="img-canvas-wrapper">
+              <canvas id="canvas-grad" width="128" height="128"></canvas>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--accent-warn); font-weight: 600; margin-top: 8px;">NOISE ALIGNMENT</div>
+          </div>
+
+          <div class="operator-sign">
+            <div style="display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; gap: 4px;">
+              <i class="fas fa-equals"></i>
+              <span style="font-size: 0.65rem; color: var(--text-dark);">Perturbed</span>
+            </div>
+          </div>
+
+          <div class="visual-node">
+            <div class="visual-node-label">Adversarial (x_adv)</div>
+            <div class="img-canvas-wrapper">
+              <canvas id="canvas-adv" width="128" height="128"></canvas>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--accent-warn); font-weight: 600; margin-top: 8px;">ATTACK FORWARDED</div>
+          </div>
+
+          <div class="operator-sign">
+            <div style="display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; gap: 4px;">
+              <i class="fas fa-shield-halved"></i>
+              <span style="font-size: 0.65rem; color: var(--text-dark);">Filter applied</span>
+            </div>
+          </div>
+
+          <div class="visual-node">
+            <div class="visual-node-label">Defended input</div>
+            <div class="img-canvas-wrapper">
+              <canvas id="canvas-defended" width="128" height="128"></canvas>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--secondary); font-weight: 600; margin-top: 8px;">NOISE REDUCED</div>
+          </div>
+
+        </div>
+        
+        <!-- Predictions bars outputs -->
+        <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-muted);">
+          MODEL CLASSIFIER CONFIDENCE PROBABILITIES:
+        </h4>
+        <div id="confidence-section" class="prediction-panel">
+          <!-- Populated in JS dynamically -->
+        </div>
+
+      </section>
+
+    </main>
+    
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/mock_data.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/playground.js"></script>
+</body>
+</html>
